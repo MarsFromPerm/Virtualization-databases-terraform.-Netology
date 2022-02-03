@@ -32,9 +32,69 @@ Hey, Netology
 </body>
 </html>
 ```   
-![IMG](/images/Virt-3.1.jpg)   
-###### Товарищи преподаватели, необходима помощь. Как видно в принсткрине, до пункта реализуйте функциональность - все вроде получилось. А вот в это пункте не знаю что делать от слова совсем. в какой директории папки должны находиться? в .docker/ ??? и правильные ли у меня html  и Dockerfile. Заранее спасибо большое за помощь. 
-Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки на https://hub.docker.com/username_repo.
+ 
+###### Данную задачу попытался сделать в вирт.машине на убунту. Вывод команд ниже - для того чтоб можно было найти ошибки, если будут.  
+###### vagrant@vagrant:~$ vim Dockerfile
+vagrant@vagrant:~$ vim test1.html
+vagrant@vagrant:~$ ls -l
+total 8
+-rw-rw-r-- 1 vagrant vagrant 63 Feb  3 16:19 Dockerfile
+-rw-rw-r-- 1 vagrant vagrant 99 Feb  3 16:20 test1.html
+vagrant@vagrant:~$ docker build . -t test2
+Sending build context to Docker daemon  19.97kB
+Step 1/3 : FROM nginx:1.21.5
+ ---> 605c77e624dd
+Step 2/3 : COPY test1.html /usr/share/nginx/html
+ ---> e7273b1b54b0
+Step 3/3 : EXPOSE 80
+ ---> Running in b1b98803086c
+Removing intermediate container b1b98803086c
+ ---> b9154eec2575
+Successfully built b9154eec2575
+Successfully tagged test2:latest
+vagrant@vagrant:~$ docker run --name test2 -d -p 8080:80 test2
+e8f63abc7af4b6b4e2d1ed82cb1e3a708273ed0398028a608b4000f77e3b6541
+vagrant@vagrant:~$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: marsfromperm
+Password:
+WARNING! Your password will be stored unencrypted in /home/vagrant/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+vagrant@vagrant:~$ docker tag test2:latest marsfromperm/netology:0.1
+vagrant@vagrant:~$ docker push marsfromperm/netology:0.1
+The push refers to repository [docker.io/marsfromperm/netology]
+6e401cc41374: Pushed
+d874fd2bc83b: Mounted from library/nginx
+32ce5f6a5106: Mounted from library/nginx
+f1db227348d0: Mounted from library/nginx
+b8d6e692a25e: Mounted from library/nginx
+e379e8aedd4d: Mounted from library/nginx
+2edcec3590a4: Mounted from library/nginx
+0.1: digest: sha256:68f3a2c16c2ed898f870e3f41f8f24bcdd40cae7080d153f34718dfd6cdf281f size: 1777
+vagrant@vagrant:~$  
+###### vagrant@vagrant:~$ ls -l
+total 8
+-rw-rw-r-- 1 vagrant vagrant 68 Feb  3 16:25 Dockerfile
+-rw-rw-r-- 1 vagrant vagrant 99 Feb  3 16:20 test1.html
+vagrant@vagrant:~$ cat Dockerfile
+FROM nginx:1.21.5
+
+COPY test1.html /usr/share/nginx/html
+
+EXPOSE 80
+vagrant@vagrant:~$ cat test1.html
+<html>
+        <head>
+                Hey, Netology
+        </head>
+        <body>
+                <h1>I’m DevOps Engineer!</h1>
+        </body>
+</html>
+vagrant@vagrant:~$  
 
 ## Задача 2
 
